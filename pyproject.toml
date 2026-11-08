@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "careerpilot"
+version = "0.1.0"
+description = "CareerPilot AI ontology and matching vertical slice"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "rdflib>=7.1.0,<8.0.0",
+  "pyshacl>=0.26.0,<0.27.0",
+  "pydantic>=2.9.2,<3.0.0",
+  "httpx>=0.28.1,<0.29.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

@@ -1,0 +1,13 @@
+PREFIX cpo: <https://careerpilot.ai/ontology#>
+
+SELECT DISTINCT ?job ?skill
+WHERE {
+    ?job a cpo:Job ;
+         cpo:requiresSkill ?skill .
+
+    <https://careerpilot.ai/profile/opaque-user-id#Candidate>
+        cpo:hasSkillAssertion ?assertion .
+
+    ?assertion cpo:assertedSkill ?skill .
+}
+LIMIT 100
