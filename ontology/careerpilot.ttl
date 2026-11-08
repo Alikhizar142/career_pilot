@@ -1,0 +1,155 @@
+@prefix cpo: <https://careerpilot.ai/ontology#> .
+@prefix kh: <https://careerpilot.ai/profile/opaque-user-id#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+<https://careerpilot.ai/ontology>
+    a owl:Ontology ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:label "CareerPilot Ontology" .
+
+cpo:Entity a owl:Class .
+cpo:Candidate a owl:Class ; rdfs:subClassOf cpo:Entity .
+cpo:Job a owl:Class ; rdfs:subClassOf cpo:Entity .
+cpo:Organization a owl:Class ; rdfs:subClassOf cpo:Entity .
+cpo:Skill a owl:Class ; rdfs:subClassOf skos:Concept .
+cpo:Competency a owl:Class ; rdfs:subClassOf cpo:Skill .
+cpo:Technology a owl:Class ; rdfs:subClassOf cpo:Skill .
+cpo:Occupation a owl:Class ; rdfs:subClassOf cpo:Skill .
+cpo:Qualification a owl:Class .
+cpo:Experience a owl:Class .
+cpo:Education a owl:Class .
+cpo:Project a owl:Class .
+cpo:Certification a owl:Class .
+cpo:Evidence a owl:Class .
+cpo:SkillAssertion a owl:Class .
+cpo:JobRequirement a owl:Class .
+cpo:Application a owl:Class .
+cpo:ResumeVersion a owl:Class .
+cpo:CoverLetter a owl:Class .
+cpo:Interview a owl:Class .
+cpo:Location a owl:Class .
+cpo:WorkArrangement a owl:Class .
+
+cpo:hasSkillAssertion a owl:ObjectProperty ;
+    rdfs:domain cpo:Candidate ;
+    rdfs:range cpo:SkillAssertion .
+
+cpo:assertedSkill a owl:ObjectProperty ;
+    rdfs:domain cpo:SkillAssertion ;
+    rdfs:range cpo:Skill .
+
+cpo:supportedBy a owl:ObjectProperty ;
+    rdfs:domain cpo:SkillAssertion ;
+    rdfs:range cpo:Evidence .
+
+cpo:requiresSkill a owl:ObjectProperty ;
+    rdfs:domain cpo:Job ;
+    rdfs:range cpo:Skill .
+
+cpo:preferredSkill a owl:ObjectProperty ;
+    rdfs:domain cpo:Job ;
+    rdfs:range cpo:Skill .
+
+cpo:demonstratesSkill a owl:ObjectProperty ;
+    rdfs:domain cpo:Project ;
+    rdfs:range cpo:Skill .
+
+cpo:usesTechnology a owl:ObjectProperty ;
+    rdfs:domain cpo:Project ;
+    rdfs:range cpo:Technology .
+
+cpo:hasOccupation a owl:ObjectProperty ;
+    rdfs:domain cpo:Candidate ;
+    rdfs:range cpo:Occupation .
+
+cpo:relatedOccupation a owl:ObjectProperty ;
+    rdfs:domain cpo:Occupation ;
+    rdfs:range cpo:Occupation .
+
+cpo:verificationStatus a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+cpo:evidenceType a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+cpo:extractionConfidence a owl:DatatypeProperty ;
+    rdfs:range xsd:decimal .
+
+cpo:proficiencyLevel a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+cpo:hasTitle a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+cpo:sourceJobId a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+cpo:jobDescription a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+cpo:workplaceMode a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+cpo:postedAt a owl:DatatypeProperty ;
+    rdfs:range xsd:dateTime .
+
+cpo:retrievedAt a owl:DatatypeProperty ;
+    rdfs:range xsd:dateTime .
+
+cpo:jobSource a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+cpo:applicationUrl a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+cpo:jobLocation a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+cpo:hasSourceDocument a owl:ObjectProperty ;
+    rdfs:domain cpo:Evidence ;
+    rdfs:range owl:Thing .
+
+cpo:CandidateSkill a owl:Class ;
+    rdfs:subClassOf cpo:SkillAssertion .
+
+cpo:AlgorithmicSkill a owl:Class ;
+    rdfs:subClassOf cpo:Competency .
+
+cpo:ComputerVision a cpo:Competency .
+cpo:ImageSegmentation a cpo:Competency .
+cpo:PyTorch a cpo:Technology .
+cpo:OpenCV a cpo:Technology .
+cpo:Python a cpo:Technology .
+cpo:FastAPI a cpo:Technology .
+cpo:LangGraph a cpo:Technology .
+cpo:MCP a cpo:Technology .
+
+kh:Candidate a cpo:Candidate .
+
+kh:FetoVision a cpo:Project ;
+    cpo:usesTechnology cpo:PyTorch ;
+    cpo:usesTechnology cpo:OpenCV ;
+    cpo:demonstratesSkill cpo:ComputerVision ;
+    cpo:demonstratesSkill cpo:ImageSegmentation .
+
+kh:PythonAssertion a cpo:SkillAssertion ;
+    cpo:assertedSkill cpo:Python ;
+    cpo:supportedBy kh:FetoVisionEvidence ;
+    cpo:verificationStatus "profile_verified" ;
+    cpo:extractionConfidence "0.94"^^xsd:decimal .
+
+kh:FetoVisionEvidence a cpo:Evidence ;
+    cpo:evidenceType "project" ;
+    cpo:verificationStatus "profile_verified" ;
+    cpo:extractionConfidence "0.94"^^xsd:decimal ;
+    prov:wasDerivedFrom kh:ProfileDocument .
+
+kh:ProfileDocument a prov:Entity ;
+    rdfs:label "khizar.md" .
+
+kh:Candidate cpo:hasSkillAssertion kh:PythonAssertion .

@@ -1,0 +1,14 @@
+PREFIX cpo: <https://careerpilot.ai/ontology#>
+
+SELECT DISTINCT ?missingSkill
+WHERE {
+    <https://careerpilot.ai/job/opaque-job-id#Job>
+        cpo:requiresSkill ?missingSkill .
+
+    FILTER NOT EXISTS {
+        <https://careerpilot.ai/profile/opaque-user-id#Candidate>
+            cpo:hasSkillAssertion ?assertion .
+        ?assertion cpo:assertedSkill ?missingSkill .
+    }
+}
+LIMIT 100

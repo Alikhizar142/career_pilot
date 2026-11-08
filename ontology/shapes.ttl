@@ -1,0 +1,92 @@
+@prefix cpo: <https://careerpilot.ai/ontology#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+cpo:EvidenceShape a sh:NodeShape ;
+    sh:targetClass cpo:Evidence ;
+    sh:property [
+        sh:path cpo:evidenceType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path cpo:verificationStatus ;
+        sh:in ( "verified" "profile_verified" "unverified" "rejected" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path cpo:extractionConfidence ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path prov:wasDerivedFrom ;
+        sh:minCount 1 ;
+    ] .
+
+cpo:SkillAssertionShape a sh:NodeShape ;
+    sh:targetClass cpo:SkillAssertion ;
+    sh:property [
+        sh:path cpo:assertedSkill ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path cpo:supportedBy ;
+        sh:minCount 1 ;
+    ] .
+
+cpo:CandidateShape a sh:NodeShape ;
+    sh:targetClass cpo:Candidate ;
+    sh:property [
+        sh:path cpo:hasSkillAssertion ;
+        sh:node cpo:SkillAssertionShape ;
+    ] .
+
+cpo:JobShape a sh:NodeShape ;
+    sh:targetClass cpo:Job ;
+    sh:property [
+        sh:path cpo:hasTitle ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path cpo:sourceJobId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path cpo:jobSource ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path cpo:jobDescription ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path cpo:workplaceMode ;
+        sh:in ( "remote" "hybrid" "on-site" "unknown" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+cpo:ApplicationShape a sh:NodeShape ;
+    sh:targetClass cpo:Application ;
+    sh:property [
+        sh:path cpo:hasTitle ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
